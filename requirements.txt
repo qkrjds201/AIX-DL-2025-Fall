@@ -1,0 +1,8 @@
+torch
+streamlit
+requests
+transformers
+numpy
+konlpy
+protobuf==3.20.3
+kobert_tokenizer @ git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf'

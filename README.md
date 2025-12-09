@@ -1,18 +1,32 @@
 ![header](https://capsule-render.vercel.app/api?type=speech&color=gradient&height=200&section=header&text=2025-2%20AI%2BX%20DeepLearning&desc=BERT%20기반%20한국어%20감성%20분석·키워드%20추출을%20이용한%20GIF%20추천%20시스템%20개발&fontSize=50&fontColor=FFFFFF&fontAlignY=35)
 # BERT 기반 한국어 감성 분석·키워드 추출을 이용한 GIF 추천 시스템 개발
 
-- 한양대학교 경영학부 박성헌(2018027074)
-- 한양대학교 경영학부 인용건(2019078122)
+- **팀원1 - 한양대학교 경영학부 박성헌(2018027074)**
+    - KoBERT 모델 학습 및 평가
+    - GIF 추천 시스템 설계
+    - Streamlit 구현
+    - 보고서 작성 및 영상 녹화
+
+- **팀원2 - 한양대학교 경영학부 인용건(2019078122)**
+    - 데이터 전처리
+    - KoELECTRA 모델 학습 및 평가
+    - GIF 추천 시스템 설계
+    - 보고서 작성 및 영상 녹화
+
+- **Video Link** (https://youtu.be/ufOfsBKDpxA?si=PSigJPS08zr62-TN)
+
 
 ## 0. 프로젝트 개요
 ### 프로젝트 소개
-본 프로젝트는 **KoBERT/KoELECTRA 기반 한국어 감정 분류 모델**과 **키워드 추출 로직**을 결합하여, 메신저 사용자의 입력 문장에 어울리는 **GIF를 자동으로 추천해주는 시스템**을 구현하는 것을 목표로 한다.
+본 프로젝트는 **KoBERT/KoELECTRA 기반 한국어 감정 분류 모델**과 **키워드 추출 로직**을 결합하여, 메신저 사용자의 입력 문장에 어울리는 **GIF를 자동으로 추천해주는 시스템**을 구현하는 것을 목표로 했다.
+
 <p align="center">
-  <img src="preview 1.png">
+  <img src="images/preview 1.png">
 </p>
 <p align="center">
-  <img src="preview 2.png">
+  <img src="images/preview 2.png">
 </p>
+
 ### 주제 선정 배경
 카카오톡, 인스타그램과 같은 플랫폼 비즈니스는 사용자들이 서비스 안에 더 오래 머물고, 더 자주 상호작용하도록 만드는 것을 핵심 목표로 삼는다. 이러한 환경에서 사용자는 텍스트를 이용한 언어적 소통뿐만 아니라, 이모티콘·스티커·GIF와 같은 비언어적 표현 수단도 활발하게 사용한다. 최근 카카오톡에 도입된 이모티콘 추천 기능, 인스타그램 다이렉트 메시지(DM)의 GIPHY 연동 기능은 이러한 흐름을 잘 보여주는 대표적 사례다.
 
@@ -41,7 +55,7 @@
 ```mermaid
 flowchart TB
     A[사용자 입력 문장] --> B["텍스트 전처리"]
-    B --> C1["감성 분석 모듈<br/>(KoBERT Classifier)"]
+    B --> C1["감성 분석 모듈<br/>(KoBERT/KoELECTRA)"]
     B --> C2["키워드 추출 모듈<br/>(Konlpy Okt)"]
 
     C1 --> D1["감정 레이블<br/>(공포/놀람/분노/슬픔/중립/행복/혐오)"]
@@ -54,6 +68,32 @@ flowchart TB
     F --> G["후처리 및 랭킹"]
     G --> H[사용자에게 GIF 추천 결과 반환]
 ```
+
+### Quick Start(실행 방법)
+
+#### 1) 저장소 클론
+```bash
+git clone https://github.com/qkrjds201/AIX-DL-2025-Fall.git
+cd AIX-DL-2025-Fall
+```
+
+#### 2) 필요 패키지 설치
+```bash
+pip install -r requirements.txt
+```
+
+#### 3) app.py와 같은 디렉토리에 아래 파일 준비
+- `kobert_emotion_model_state_dict.pt`
+- `koelectra_emotion_model_state_dict.pt`
+- `keyboard.png`
+
+
+#### 4) Streamlit 앱 실행
+```bash
+streamlit run app.py
+```
+
+
 
 ## 1. 데이터 & 전처리
 ### 사용한 데이터
@@ -834,6 +874,11 @@ KoELECTRA 감정 분류 모델은 전체 검증 데이터 기준 약 81%의 정�
 ### 3) KoBERT, KoELECTRA 두 모델 성능 비교
 
 학습된 두 모델의 성능을 종합해 봤을 때, KoELECTRA는 검증 정확도 81.16%, macro F1-score 0.715를 기록했으며, KoBERT는 정확도 80.38%, macro F1-score 0.723를 보였다. 정확도는 KoELECTRA가 약간 앞서지만, overall class 균형을 반영하는 macro F1-score에서는 KoBERT가 조금 더 우수한 성능을 보였다.
+
+<p align="center">
+  <img src="images/KoBERT F1-score.png" width="350">
+  <img src="images/KoELECTRA F1-score.png" width="350">
+</p>
 
 
 ## 4. 감정 + 키워드 기반 GIF 추천 파이프라인

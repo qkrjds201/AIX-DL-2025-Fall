@@ -876,6 +876,11 @@ KoELECTRA 감정 분류 모델은 전체 검증 데이터 기준 약 81%의 정�
 학습된 두 모델의 성능을 종합해 봤을 때, KoELECTRA는 검증 정확도 81.16%, macro F1-score 0.715를 기록했으며, KoBERT는 정확도 80.38%, macro F1-score 0.723를 보였다. 정확도는 KoELECTRA가 약간 앞서지만, overall class 균형을 반영하는 macro F1-score에서는 KoBERT가 조금 더 우수한 성능을 보였다.
 
 <p align="center">
+  <img src="images/KoBERT cf.png" width="350">
+  <img src="images/KoELECTRA cf.png" width="350">
+</p>
+
+<p align="center">
   <img src="images/KoBERT F1-score.png" width="350">
   <img src="images/KoELECTRA F1-score.png" width="350">
 </p>
